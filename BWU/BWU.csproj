@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>BWU</AssemblyName>
+    <RootNamespace>BWU</RootNamespace>
+    <Version>1.0.0</Version>
+    <AssemblyTitle>BWU - Better Windows Utilities</AssemblyTitle>
+    <Product>Better Windows Utilities</Product>
+    <Company>BWU Project</Company>
+    <Description>Make Windows Better.</Description>
+    <ApplicationIcon>Assets\Icons\bwu.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\bwu.ico" />
+    <Resource Include="Assets\Images\bwu.png" />
+  </ItemGroup>
+
+</Project>

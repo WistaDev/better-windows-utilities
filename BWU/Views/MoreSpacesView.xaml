@@ -1,0 +1,129 @@
+<UserControl x:Class="BWU.Views.MoreSpacesView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:util="clr-namespace:BWU.Utilities">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="0,0,10,0">
+            <TextBlock Text="{Binding AdminNote}" Style="{StaticResource Muted}" Margin="0,0,0,10"
+                       Visibility="{Binding AdminNote, Converter={StaticResource StringToVis}}"/>
+
+            <!-- Overall -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Storage analysis (system drive)" Style="{StaticResource H3}"/>
+                            <TextBlock Style="{StaticResource Muted}" Margin="0,2,0,0"
+                                       Text="BWU More Spaces recovers disk space without deleting your personal files. Every action is explained and asks for confirmation first."/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                            <Button Content="Analyze again" Command="{Binding AnalyzeCommand}" Style="{StaticResource SecondaryButton}"/>
+                            <Button Content="Clean all temporary files" Command="{Binding CleanAllTempCommand}" Style="{StaticResource PrimaryButton}" Margin="0"/>
+                        </StackPanel>
+                    </Grid>
+                    <ProgressBar Value="{Binding UsedPercent, Mode=OneWay}" Maximum="100" Margin="0,14,0,10"/>
+                    <WrapPanel>
+                        <TextBlock Margin="0,0,24,4"><Run Text="Total: " Foreground="{DynamicResource SubTextBrush}"/><Run Text="{Binding TotalText, Mode=OneWay}" FontWeight="SemiBold"/></TextBlock>
+                        <TextBlock Margin="0,0,24,4"><Run Text="Used: " Foreground="{DynamicResource SubTextBrush}"/><Run Text="{Binding UsedText, Mode=OneWay}" FontWeight="SemiBold"/></TextBlock>
+                        <TextBlock Margin="0,0,24,4"><Run Text="Available: " Foreground="{DynamicResource SubTextBrush}"/><Run Text="{Binding FreeText, Mode=OneWay}" FontWeight="SemiBold"/></TextBlock>
+                        <TextBlock Margin="0,0,24,4"><Run Text="Temporary files: " Foreground="{DynamicResource SubTextBrush}"/><Run Text="{Binding TempTotalText, Mode=OneWay}" FontWeight="SemiBold"/></TextBlock>
+                    </WrapPanel>
+                    <TextBlock Margin="0,2,0,0"><Run Text="Estimated recoverable: " Foreground="{DynamicResource SubTextBrush}"/><Run Text="{Binding RecoverableText, Mode=OneWay}" FontWeight="SemiBold"/></TextBlock>
+
+                    <TextBlock Text="{Binding ProgressText}" Style="{StaticResource Muted}" Margin="0,14,0,4"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <ProgressBar Value="{Binding Progress, Mode=OneWay}" Maximum="100" IsIndeterminate="{Binding IsIndeterminate}" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource SecondaryButton}" Margin="10,0,0,0" Padding="12,4"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Compact OS -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Compact OS" Style="{StaticResource H3}"/>
+                    <TextBlock Text="{Binding CompactStatus}" Margin="0,6,0,4" TextWrapping="Wrap"/>
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,0,0,10"
+                               Text="Compresses Windows system files using compact.exe. The saving varies and is never guaranteed. It can slightly increase CPU usage on older processors and is reversible."/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Enable Compact OS" Command="{Binding EnableCompactCommand}" Style="{StaticResource PrimaryButton}"/>
+                        <Button Content="Disable Compact OS" Command="{Binding DisableCompactCommand}" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Windows Temp -->
+            <Border Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="Windows Temp" Style="{StaticResource H3}"/>
+                        <TextBlock Text="{Binding WindowsTempText}" Style="{StaticResource Muted}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Clean" Command="{Binding CleanWindowsTempCommand}" Style="{StaticResource PrimaryButton}" Margin="0" VerticalAlignment="Center" MinWidth="90"/>
+                </Grid>
+            </Border>
+
+            <!-- User Temp -->
+            <Border Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="User Temp" Style="{StaticResource H3}"/>
+                        <TextBlock Text="{Binding UserTempText}" Style="{StaticResource Muted}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Clean" Command="{Binding CleanUserTempCommand}" Style="{StaticResource PrimaryButton}" Margin="0" VerticalAlignment="Center" MinWidth="90"/>
+                </Grid>
+            </Border>
+
+            <!-- Prefetch -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Prefetch (analysis only)" Style="{StaticResource H3}"/>
+                    <TextBlock Text="{Binding PrefetchText}" Style="{StaticResource Muted}" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- DISM -->
+            <Border Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="Component store cleanup (DISM)" Style="{StaticResource H3}"/>
+                        <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,0"
+                                   Text="Removes superseded Windows components with DISM /StartComponentCleanup. Installed updates stay uninstallable. Saving varies; may take several minutes."/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Run cleanup" Command="{Binding ComponentCleanupCommand}" Style="{StaticResource SecondaryButton}" Margin="0" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Summary -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Operation summary" Style="{StaticResource H3}"/>
+                    <TextBlock Text="{Binding SummaryTotal}" Style="{StaticResource Muted}" Margin="0,2,0,6"/>
+                    <ItemsControl ItemsSource="{Binding Summary}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Margin="0,3">
+                                    <Run Text="{Binding Operation, Mode=OneWay}" FontWeight="SemiBold"/><Run Text="  "/><Run Text="{Binding Detail, Mode=OneWay}"/>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Success}" Value="True"><Setter Property="Foreground" Value="{DynamicResource TextBrush}"/></DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="Log" Style="{StaticResource Muted}" Margin="0,10,0,4"/>
+                    <TextBox Text="{Binding Log.Text, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" FontSize="12" Height="130"
+                             VerticalScrollBarVisibility="Auto" util:TextBoxBehavior.AutoScroll="True" AcceptsReturn="True"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

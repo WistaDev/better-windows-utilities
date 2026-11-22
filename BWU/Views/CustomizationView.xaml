@@ -1,0 +1,87 @@
+<UserControl x:Class="BWU.Views.CustomizationView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="0,0,10,0">
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Important" Style="{StaticResource H3}"/>
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,0"
+                               Text="BWU backs up every registry value before changing it, and each section has a Restore button. Some modifications may be overwritten by Windows updates."/>
+                    <TextBlock Text="{Binding AdminNote}" Style="{StaticResource Muted}" Margin="0,6,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Winver customization" Style="{StaticResource H3}"/>
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,10"
+                               Text="Sets the 'This product is licensed to' lines shown by winver. The Windows version and build number are not editable here because changing them can break Windows servicing."/>
+                    <TextBlock Text="Registered owner" Style="{StaticResource Muted}"/>
+                    <TextBox Text="{Binding Owner, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                    <TextBlock Text="Organization" Style="{StaticResource Muted}"/>
+                    <TextBox Text="{Binding Organization, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Save winver information" Command="{Binding SaveWinverCommand}" Style="{StaticResource PrimaryButton}"/>
+                        <Button Content="Restore original" Command="{Binding RestoreWinverCommand}" Style="{StaticResource SecondaryButton}"/>
+                        <Button Content="Open winver" Command="{Binding OpenWinverCommand}" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding WinverResult}" Style="{StaticResource Muted}" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="OEM information" Style="{StaticResource H3}"/>
+                    <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,10"
+                               Text="Shown in Settings > System > About and in System Properties."/>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Manufacturer" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding Manufacturer, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                            <TextBlock Text="Support phone" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding SupportPhone, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                            <TextBlock Text="Support URL" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding SupportUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Model" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding Model, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                            <TextBlock Text="Support hours" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding SupportHours, UpdateSourceTrigger=PropertyChanged}" Margin="0,2,0,8"/>
+                            <TextBlock Text="Logo file" Style="{StaticResource Muted}"/>
+                            <TextBox Text="{Binding LogoPath, Mode=OneWay}" IsReadOnly="True" Margin="0,2,0,8"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Border Width="64" Height="64" CornerRadius="8" Background="{DynamicResource InputBrush}" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1" Margin="0,0,12,0">
+                            <Image Source="{Binding LogoPreview}" Stretch="Uniform" Margin="4"/>
+                        </Border>
+                        <Button Content="Choose logo…" Command="{Binding PickLogoCommand}" Style="{StaticResource SecondaryButton}" VerticalAlignment="Center"/>
+                        <TextBlock Text="Any PNG/JPG/BMP is converted to the 120×120 BMP Windows requires." Style="{StaticResource Muted}" VerticalAlignment="Center" Width="320"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Save OEM information" Command="{Binding SaveOemCommand}" Style="{StaticResource PrimaryButton}"/>
+                        <Button Content="Restore original" Command="{Binding RestoreOemCommand}" Style="{StaticResource SecondaryButton}"/>
+                        <Button Content="Open System Properties" Command="{Binding OpenSystemPropertiesCommand}" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding OemResult}" Style="{StaticResource Muted}" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="Personalization settings" Style="{StaticResource H2}" Margin="0,8,0,8"/>
+            <ItemsControl ItemsSource="{Binding Tweaks}"/>
+
+            <TextBlock Text="Windows personalization shortcuts" Style="{StaticResource H2}" Margin="0,8,0,8"/>
+            <ItemsControl ItemsSource="{Binding Shortcuts}" Margin="0,0,0,16">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Title}" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8"
+                                Command="{Binding DataContext.OpenUriCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding Uri}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
